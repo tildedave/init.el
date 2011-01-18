@@ -162,7 +162,13 @@
     (progn 
       (require 'auto-complete-config)
       (add-to-list 'ac-dictionary-directories (list-to-directory (list my-emacsd "ac-dist")))
-      (ac-config-default)))
+      (ac-config-default)
+      (define-globalized-minor-mode real-global-auto-complete-mode
+        auto-complete-mode (lambda ()
+                             (if (not (minibufferp (current-buffer)))
+                                 (auto-complete-mode 1))
+                             ))
+      (real-global-auto-complete-mode t)))
 
 (if use-icicles
       (let 
