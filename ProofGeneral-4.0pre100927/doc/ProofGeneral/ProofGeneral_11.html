@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on September 27, 2010 by texi2html 1.82
+texi2html was written by: 
+            Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+-->
+<head>
+<title>Proof General: 10. Coq Proof General</title>
+
+<meta name="description" content="Proof General: 10. Coq Proof General">
+<meta name="keywords" content="Proof General: 10. Coq Proof General">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.82">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="ProofGeneral_10.html#LEGO-Proof-General" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_12.html#Isabelle-Proof-General" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="ProofGeneral.html#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_19.html#Function-Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="Coq-Proof-General"></a>
+<a name="Coq-Proof-General-1"></a>
+<h1 class="chapter">10. Coq Proof General</h1>
+
+<p>Coq Proof General is an instantiation of Proof General for the Coq proof
+assistant.  It supports most of the generic features of Proof General,
+but does not have integrated file management or proof-by-pointing yet.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Coq_002dspecific-commands">10.1 Coq-specific commands</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Coq_002dspecific-variables">10.2 Coq-specific variables</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Editing-multiple-proofs">10.3 Editing multiple proofs</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#User_002dloaded-tactics">10.4 User-loaded tactics</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Holes-feature">10.5 Holes feature</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+<hr size="6">
+<a name="Coq_002dspecific-commands"></a>
+<a name="Coq_002dspecific-commands-1"></a>
+<h2 class="section">10.1 Coq-specific commands</h2>
+<a name="index-C_002dc-C_002da-C_002di-1"></a>
+<a name="index-C_002dc-C_002da-C_002da"></a>
+<a name="index-C_002dc-C_002da-C_002ds"></a>
+<a name="index-C_002dc-C_002da-C_002de"></a>
+<a name="index-C_002dc-C_002da-C_002do"></a>
+
+<p>Coq Proof General supplies the following key-bindings:
+</p><dl compact="compact">
+<dt> <kbd>C-c C-a C-i</kbd>   </dt>
+<dd><p>Inserts &ldquo;Intros &rdquo; 
+</p></dd>
+<dt> <kbd>C-c C-a C-a</kbd></dt>
+<dd><p>Inserts &ldquo;Apply &rdquo; 
+</p></dd>
+<dt> <kbd>C-c C-a C-s</kbd></dt>
+<dd><p>Inserts &ldquo;Section &rdquo;
+</p></dd>
+<dt> <kbd>C-c C-a C-e</kbd></dt>
+<dd><p>Inserts &ldquo;End &lt;section-name&gt;.&rdquo; (this should work well with nested sections).
+</p></dd>
+<dt> <kbd>C-c C-a C-o</kbd></dt>
+<dd><p>Prompts for a SearchIsos argument.
+</p></dd>
+</dl>
+
+<hr size="6">
+<a name="Coq_002dspecific-variables"></a>
+<a name="Coq_002dspecific-variables-1"></a>
+<h2 class="section">10.2 Coq-specific variables</h2>
+<a name="index-coq_002dversion_002dis_002dV8_002d0"></a>
+<a name="index-coq_002dversion_002dis_002dV8_002d1"></a>
+
+<p>The variable
+</p><table><tr><td>&nbsp;</td><td><pre class="lisp">  coq-version-is-Vx
+</pre></td></tr></table>
+<p>(where x is 8-0 or 8-1) is used to force version of Coq, if it is t,
+then Coq is considered in version x. ProofGeneral sets it automatically
+by doing the following shell command: 
+</p><table><tr><td>&nbsp;</td><td><pre class="lisp">  (concat coq-prog-name &quot;-v&quot;)
+</pre></td></tr></table>
+
+<p>So you should not have to set this variable unless you have problems
+with different versions of Coq, you can set to t the variable
+corresponding to the version you are using in your config file (before
+ProofGeneral is loaded) and ProofGeneral won&rsquo;t override it.
+</p>
+
+<hr size="6">
+<a name="Editing-multiple-proofs"></a>
+<a name="Editing-multiple-proofs-1"></a>
+<h2 class="section">10.3 Editing multiple proofs</h2>
+
+<p>Coq allows the user to enter top-level commands while editing a proof
+script.  For example, if the user realizes that the current proof will
+fail without an additional axiom, he or she can add that axiom to the
+system while in the middle of the proof.  Similarly, the user can
+nest lemmas, beginning a new lemma while in the middle of an earlier
+one, and as the lemmas are proved or their proofs aborted they are
+popped off a stack.
+</p>
+<p>Coq Proof General supports this feature of Coq.  Top-level commands
+entered while in a proof are well backtracked. If new lemmas are
+started, Coq Proof General lets the user work on the proof of the new
+lemma, and when the lemma is finished it falls back to the previous
+one.  This is supported to any nesting depth that Coq allows.
+</p>
+<p>Warning! Using Coq commands for navigating inside the different proofs
+(<code>Resume</code> and especially <code>Suspend</code>) are not supported,
+backtracking will break syncronization.
+</p>
+<p><b>Special note:</b> The old feature that moved nested proofs outside the
+current proof is disabled.
+</p>
+<hr size="6">
+<a name="User_002dloaded-tactics"></a>
+<a name="User_002dloaded-tactics-1"></a>
+<h2 class="section">10.4 User-loaded tactics</h2>
+
+<p>Another feature that Coq allows is the extension of the grammar of the
+proof assistant by new tactic commands.  This feature interacts with the
+proof script management of Proof General, because Proof General needs to
+know when a tactic is called that alters the proof state.  When the user
+tries to retract across an extended tactic in a script, the algorithm
+for calculating how far to undo has a default behavior that is not
+always accurate in proof mode: do &quot;<code>Undo</code>&quot;.
+</p>
+<p>Coq Proof General does not currently support dynamic tactic extension in
+Coq: this is desirable but requires assistance from the Coq core.
+Instead we provide a way to add tactic and command names in the
+&lsquo;<tt>.emacs</tt>&rsquo; file. Four Configurable variables allows to register
+personal new tactics and commands into four categories:
+</p><ul>
+<li> <em>state changing commands</em>, 
+which need &quot;<code>Back</code>&quot; to be backtracked;
+</li><li> <em>state changing tactics</em>,
+which need &quot;<code>Undo</code>&quot; to be backtracked; 
+</li><li> <em>state preserving commands</em>,
+which do not need to be backtracked; 
+</li><li> <em>state preserving tactics</em>,
+which do not need to be backtracked; 
+</li></ul>
+
+<p>We give an example of existing commands that fit each category.
+</p>
+<ul>
+<li> <code>coq-user-state-preserving-commands</code>: example: &quot;<code>Print</code>&quot;
+
+</li><li> <code>coq-user-state-changing-commands</code>: example: &quot;<code>Require</code>&quot;
+
+</li><li> <code>coq-user-state-changing-tactics</code>: example: &quot;<code>Intro</code>&quot;
+ 
+</li><li> <code>coq-user-state-preserving-tactics</code>: example: &quot;<code>Idtac</code>&quot;
+</li></ul>
+
+<p>This variables are regexp string lists. See their documentations in
+emacs (<code>C-h v coq-user...</code>)  for details on how to set them in your
+&lsquo;<tt>.emacs</tt>&rsquo; file.
+</p>
+<p>Here is a simple example:
+</p><table><tr><td>&nbsp;</td><td><pre class="lisp">(setq coq-user-state-changing-commands 
+      '(&quot;MyHint&quot; &quot;MyRequire&quot;))
+(setq coq-user-state-preserving-commands 
+      '(&quot;Show\\s-+Mydata&quot;))
+</pre></td></tr></table>
+
+<p>The regexp character sequence <code>\\s-+</code> means &quot;one or more
+whitespaces&quot;. See the Emacs documentation of <code>regexp-quote</code> for the
+syntax and semantics.  WARNING: you need to restart Emacs to make the
+changes to these variables effective.
+</p>
+<p>In case of losing synchronization, the user can use <kbd>C-c C-z</kbd> to
+move the locked region to the proper position,
+(<code>proof-frob-locked-end</code>, see section <a href="ProofGeneral_4.html#Escaping-script-management">Escaping script management</a>) or
+<kbd>C-c C-v</kbd> to re-issue an erroneously back-tracked tactic without
+recording it in the script.
+</p>
+<hr size="6">
+<a name="Holes-feature"></a>
+<a name="Holes-feature-1"></a>
+<h2 class="section">10.5 Holes feature</h2>
+
+<p><em>Holes</em> are an experimental feature for complex expression
+editing. It is inspired from other tools, like Pcoq
+(<a href="http://www-sop.inria.fr/lemme/pcoq/index.html">http://www-sop.inria.fr/lemme/pcoq/index.html</a>). The principle is
+simple, holes are pieces of text that can be &quot;filled&quot; by different
+means. The new coq command insertion menu system makes use of the holes
+system. Almost all holes operations are available in the Coq/holes menu.
+</p>
+<p><b>Note:</b> Holes make use of the Emacs abbreviation mechanism, it will
+work without problem if you don&rsquo;t have an abbrev table defined for Coq
+in your config files (<code>C-h v abbrev-file-name</code> to see the name of
+the abbreviation file). If you already have such a table it won&rsquo;t be
+automatically overwritten (so that you keep your own abbreviations). But
+you must read the abbrev file given in PG/Coq sources to be able to use
+the command insertion menus. You can do the following to merge your
+abbreviations with ProofGeneral&rsquo;s abbreviations: <code>M-x
+read-abbrev-file</code>, then select the file named <code>coq-abbrev.el</code> in
+the ProofGeneral/coq directory. At Emacs exit you will be asked if you
+want to save abbrevs; answer yes.
+</p>
+
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Coq-Proof-General" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_12.html#Isabelle-Proof-General" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="ProofGeneral.html#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_19.html#Function-Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="ProofGeneral_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>David Aspinall</em> on <em>September 27, 2010</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

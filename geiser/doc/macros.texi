@@ -1,0 +1,24 @@
+@set VERSION 0.1.1
+@set STABLE_VERSION 0.1
+@set DOWN_BASE http://download.savannah.nongnu.org/releases/geiser
+@set TARBALL geiser-@value{STABLE_VERSION}.tar.gz
+
+@macro img{FILE, ALIGN}
+@ifhtml
+@html
+<img src="img/\FILE\.png" class="float\ALIGN\"/>
+@end html
+@end ifhtml
+@end macro
+
+@macro imgc{FILE}
+@ifhtml
+@html
+<img src="img/\FILE\.png"/>
+@end html
+@end ifhtml
+@end macro
+
+@macro downfile{FILE, CAPT}
+@uref{@value{DOWN_BASE}/@value{STABLE_VERSION}/\FILE\, \CAPT\}
+@end macro

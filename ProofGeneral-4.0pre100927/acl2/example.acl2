@@ -1,0 +1,9 @@
+;;  Example proof script for ACL2 Proof General.
+;;
+;;   example.acl2,v 10.0 2008/07/24 10:00:06 da Exp
+;;    
+
+(defthm assoc->assoc-equal
+  (equal (assoc x a)
+	 (assoc-equal x a)))
+
