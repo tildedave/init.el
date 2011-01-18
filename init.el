@@ -9,9 +9,12 @@
 (setq use-proofgeneral t)
 (setq use-js2 t)
 (setq use-yaml t)
+(setq use-php t)
 (setq use-python-pep8 t)
 (setq use-python-pylint t)
 (setq use-inf-ruby t)
+(setq use-rails-reloaded t)
+(setq use-feature-mode t)
 
 ;; Which other packages get loaded
 (setq use-yasnippet t)
@@ -21,6 +24,7 @@
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
 (global-set-key (kbd "<C-tab>") 'other-window)
 (global-set-key "\C-f" 'scroll-down)
+(global-set-key "\C-v" 'scroll-up)   ;; should have been set by default
 (global-set-key "\M-g" 'goto-line)
 
 ;; Check if we are on my Windows 7 box
@@ -76,7 +80,6 @@
             (add-to-list 'auto-mode-alist '("\.rkt" . scheme-mode)))
         (warn "Unable to load geiser-mode"))))
 
-
 ;; JS2/Yaml -- These should be in the load path
 
 (if use-js2
@@ -89,7 +92,6 @@
     (progn 
       (require 'yaml-mode)
       (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
-
 
 ;; Python
 
@@ -105,7 +107,28 @@
 ;; Ruby
 
 (if use-inf-ruby
-    (require 'inf-ruby))
+    (progn
+      (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+      (require 'inf-ruby)))
+
+;; Cucumber
+
+(if use-feature-mode
+    (let ((feature-mode-directory (list-to-directory (list my-site-lisp "feature-mode"))))
+      (if (file-exists-p feature-mode-directory)
+          (progn
+            (add-to-list 'load-path feature-mode-directory)
+            (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+            (setq feature-default-language "fi")
+            (require 'feature-mode))
+        (warn "Could not load feature mode"))))
+
+(if use-rails-reloaded
+    (let*
+        ((rails-reloaded-path (list-to-directory (list my-site-lisp "rails-reloaded"))))
+      (progn
+        (add-to-list 'load-path rails-reloaded-path)
+        (require 'rails-autoload))))
 
 ;; OTHER MODULES (yasnippet, autocomplete, etc)
 
@@ -158,11 +181,24 @@
 ;; Remove toolbar
 (tool-bar-mode -1)
 
-;; FONTS
+;; AUTOMATICALLY SET VARIABLES/FACES
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(inhibit-startup-screen t))
 
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 109 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+ '(default ((t (
+                :inherit nil :stipple nil :background "white" :foreground "black" 
+                :inverse-video nil :box nil :strike-through nil :overline nil
+                :underline nil :slant normal :weight normal :height 109
+                :width normal :foundry "unknown" :family "DejaVu Sans Mono"
+                )))))
