@@ -3,7 +3,7 @@
 (setq my-site-lisp my-emacsd)
 (add-to-list 'load-path my-site-lisp)
 
-;; Which language modes get loaded
+;; By default, all language modes get loaded
 (setq use-haskell t)
 (setq use-geiser t)
 (setq use-proofgeneral t)
@@ -72,15 +72,18 @@
             (load geiser-load-file)
             (require 'geiser-install)
             (if is-windows
-                (setq geiser-scheme-dir "C:/cygwin/usr/local/share/geiser")))
+                (setq geiser-scheme-dir "C:/cygwin/usr/local/share/geiser"))
+            (add-to-list 'auto-mode-alist '("\.rkt" . scheme-mode)))
         (warn "Unable to load geiser-mode"))))
+
 
 ;; JS2/Yaml -- These should be in the load path
 
 (if use-js2
     (progn
       (autoload 'js2-mode "js2" nil t)
-      (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))))
+      (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+      (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))))
 
 (if use-yaml
     (progn 
@@ -104,7 +107,7 @@
 (if use-inf-ruby
     (require 'inf-ruby))
 
-;; OTHER MODULES (autocompletion, etc)
+;; OTHER MODULES (yasnippet, autocomplete, etc)
 
 (if use-yasnippet
     (let* 
@@ -152,3 +155,14 @@
 ;; No tabs
 (setq-default indent-tabs-mode nil)
 
+;; Remove toolbar
+(tool-bar-mode -1)
+
+;; FONTS
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 109 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
