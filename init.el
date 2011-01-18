@@ -9,6 +9,9 @@
 (setq use-proofgeneral t)
 (setq use-js2 t)
 (setq use-yaml t)
+(setq use-python-pep8 t)
+(setq use-python-pylint t)
+(setq use-inf-ruby t)
 
 ;; Which other packages get loaded
 (setq use-yasnippet t)
@@ -84,6 +87,22 @@
       (require 'yaml-mode)
       (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
 
+
+;; Python
+
+(if use-python-pep8
+    (require 'python-pep8))
+      
+(if use-python-pylint
+    (progn
+      (require 'python-pylint)
+      (autoload 'python-pylint "python-pylint")
+      (autoload 'pylint "python-pylint")))
+
+;; Ruby
+
+(if use-inf-ruby
+    (require 'inf-ruby))
 
 ;; OTHER MODULES (autocompletion, etc)
 
