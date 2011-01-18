@@ -19,6 +19,7 @@
 ;; Which other packages get loaded
 (setq use-yasnippet t)
 (setq use-autocomplete t)
+(setq use-icicles t)
 
 ;; Essential keybindings
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
@@ -162,6 +163,15 @@
       (require 'auto-complete-config)
       (add-to-list 'ac-dictionary-directories (list-to-directory (list my-emacsd "ac-dist")))
       (ac-config-default)))
+
+(if use-icicles
+      (let 
+          ((icicle-path (list-to-directory (list my-site-lisp "icicles"))))
+        (progn
+          (add-to-list 'load-path icicle-path)
+          (require 'icicles)
+          (icy-mode 1))))
+
 
 ;; QUALITY OF LIFE SETTINGS
 
