@@ -94,11 +94,11 @@
                 'shell-strip-ctrl-m nil t)
       (add-hook 'comint-output-filter-functions
                 'comint-watch-for-password-prompt nil t)
-      (setq explicit-shell-file-name "bash.exe")))
+      (setq explicit-shell-file-name "bash.exe")
+      (setq shell-file-name explicit-shell-file-name)))
 
   
 ;; Shell coloring
-(setq shell-file-name explicit-shell-file-name)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
