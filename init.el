@@ -10,6 +10,10 @@
 (setq use-js2 t)
 (setq use-yaml t)
 
+;; Which other packages get loaded
+(setq use-yasnippet t)
+(setq use-autocomplete t)
+
 ;; Essential keybindings
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
 (global-set-key (kbd "<C-tab>") 'other-window)
@@ -81,6 +85,30 @@
       (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
 
 
+;; OTHER MODULES (autocompletion, etc)
+
+(if use-yasnippet
+    (let* 
+        ((yasnippet-load-directory
+          (list-to-directory (list my-site-lisp "plugins" "yasnippet-0.6.1c")))
+	 (yasnippet-bundle
+	  (list-to-directory (list yasnippet-load-directory "snippets")))
+         )
+      (if (and (file-exists-p yasnippet-load-directory)
+	       (file-exists-p yasnippet-bundle))
+	  (progn
+	    (add-to-list 'load-path yasnippet-load-directory)
+	    (require 'yasnippet) ;; not yasnippet-bundle
+	    (yas/initialize)
+	    (yas/load-directory yasnippet-bundle))
+	(warn "Error loading yasnippet"))))
+
+(if use-autocomplete
+    (progn 
+      (require 'auto-complete-config)
+      (add-to-list 'ac-dictionary-directories (list-to-directory (list my-emacsd "ac-dist")))
+      (ac-config-default)))
+
 ;; QUALITY OF LIFE SETTINGS
 
 ;; savehist mode
@@ -88,6 +116,7 @@
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-file (concat (file-name-as-directory (concat my-emacsd "tmp")) "savehist"))
 
+;; big ol' windows hacks
 (if is-windows 
     (progn 
       (add-hook 'comint-output-filter-functions
@@ -96,7 +125,6 @@
                 'comint-watch-for-password-prompt nil t)
       (setq explicit-shell-file-name "bash.exe")
       (setq shell-file-name explicit-shell-file-name)))
-
   
 ;; Shell coloring
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
