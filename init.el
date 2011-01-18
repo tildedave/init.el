@@ -24,7 +24,9 @@
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
 (global-set-key (kbd "<C-tab>") 'other-window)
 (global-set-key "\C-f" 'scroll-down)
-(global-set-key "\C-v" 'scroll-up)   ;; should have been set by default
+(global-set-key "\C-v" 'scroll-up)
+(global-set-key "\M-\C-f" 'scroll-other-window-down)
+(global-set-key "\M-\C-v" 'scroll-other-window)
 (global-set-key "\M-g" 'goto-line)
 
 ;; Check if we are on my Windows 7 box
@@ -104,6 +106,13 @@
       (autoload 'python-pylint "python-pylint")
       (autoload 'pylint "python-pylint")))
 
+;; PHP
+
+(if use-php
+    (progn
+      (autoload 'php-mode "php-mode" nil t)
+      (add-to-list 'auto-mode-alist '("\\.php" . php-mode))))
+
 ;; Ruby
 
 (if use-inf-ruby
@@ -182,6 +191,10 @@
 (tool-bar-mode -1)
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
+
+(setq ansi-color-names-vector ; better contrast colors
+      ["black" "red4" "green4" "yellow4"
+       "blue3" "magenta4" "cyan4" "white"])
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
