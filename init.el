@@ -167,7 +167,9 @@
       (ac-config-default)
       (define-globalized-minor-mode real-global-auto-complete-mode
         auto-complete-mode (lambda ()
-                             (if (not (minibufferp (current-buffer)))
+                             (if (not 
+                                  (or (minibufferp (current-buffer))
+                                      (search ("shell" (buffer-name (current-buffer))))))
                                  (auto-complete-mode 1))
                              ))
       (real-global-auto-complete-mode t)))
@@ -208,7 +210,7 @@
 ;; Remove toolbar
 (tool-bar-mode -1)
 
-;;
+;; Kill shells without asking
 (add-hook 
  'shell-mode-hook 
  (lambda () 
