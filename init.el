@@ -206,6 +206,15 @@
 ;; Remove toolbar
 (tool-bar-mode -1)
 
+;;
+(add-hook 
+ 'shell-mode-hook 
+ (lambda () 
+   (set-process-query-on-exit-flag (get-buffer-process 
+                                    (current-buffer)) 
+                                   nil))) 
+
+
 ;; AUTOMATICALLY SET VARIABLES/FACES
 
 (setq ansi-color-names-vector ; better contrast colors
