@@ -167,9 +167,8 @@
       (ac-config-default)
       (define-globalized-minor-mode real-global-auto-complete-mode
         auto-complete-mode (lambda ()
-                             (if (not 
-                                  (or (minibufferp (current-buffer))
-                                      (search ("shell" (buffer-name (current-buffer))))))
+                             (if (not (or (minibufferp (current-buffer))
+                                          (search "shell" (buffer-name (current-buffer)))))
                                  (auto-complete-mode 1))
                              ))
       (real-global-auto-complete-mode t)))
@@ -215,8 +214,8 @@
  'shell-mode-hook 
  (lambda () 
    (set-process-query-on-exit-flag (get-buffer-process 
-                                    (current-buffer)) 
-                                   nil))) 
+                                   (current-buffer)) 
+                                 nil))) 
 
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
