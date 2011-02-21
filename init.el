@@ -8,6 +8,8 @@
 (setq use-geiser t)
 (setq use-proofgeneral t)
 (setq use-js2 t)
+(setq use-clojure t)
+(setq use-slime t)
 (setq use-yaml t)
 (setq use-php t)
 (setq use-python-pep8 t)
@@ -82,6 +84,31 @@
                 (setq geiser-scheme-dir "C:/cygwin/usr/local/share/geiser"))
             (add-to-list 'auto-mode-alist '("\.rkt" . scheme-mode)))
         (warn "Unable to load geiser-mode"))))
+
+(if use-slime
+    (progn
+      (add-to-list 'load-path (list-to-directory (list my-site-lisp "slime")))
+      (require 'slime)
+      (slime-setup '(slime-repl))))
+
+(if use-clojure
+    (let 
+        ((clojure-load-file
+          (path-to-file (list my-site-lisp "clojure-mode") "clojure-mode.el"))
+         (clojure-test-load-file
+          (path-to-file (list my-site-lisp "clojure-mode") "clojure-test-mode.el"))
+         (swank-clojure-load-file 
+          (path-to-file (list my-site-lisp "swank-clojure") "swank-clojure.el"))
+         )
+      (if (file-exists-p clojure-load-file)
+          (progn
+            (load clojure-load-file)
+            (load clojure-test-load-file)
+            (load swank-clojure-load-file)
+            (add-hook 'slime-repl-mode-hook 'clojure-mode-font-lock-setup)
+            )
+        (warn "Unable to load clojure-mode"))))
+         
 
 ;; JS2/Yaml -- These should be in the load path
 
