@@ -8,8 +8,12 @@
 (setq use-geiser t)
 (setq use-proofgeneral t)
 (setq use-js2 t)
+(setq use-clojure t)
+(setq use-slime t)
 (setq use-yaml t)
+(setq use-nxml t)
 (setq use-php t)
+(setq use-tidy t)
 (setq use-python-pep8 t)
 (setq use-python-pylint t)
 (setq use-inf-ruby t)
@@ -83,6 +87,31 @@
             (add-to-list 'auto-mode-alist '("\.rkt" . scheme-mode)))
         (warn "Unable to load geiser-mode"))))
 
+(if use-slime
+    (progn
+      (add-to-list 'load-path (list-to-directory (list my-site-lisp "slime")))
+      (require 'slime)
+      (slime-setup '(slime-repl))))
+
+(if use-clojure
+    (let 
+        ((clojure-load-file
+          (path-to-file (list my-site-lisp "clojure-mode") "clojure-mode.el"))
+         (clojure-test-load-file
+          (path-to-file (list my-site-lisp "clojure-mode") "clojure-test-mode.el"))
+         (swank-clojure-load-file 
+          (path-to-file (list my-site-lisp "swank-clojure") "swank-clojure.el"))
+         )
+      (if (file-exists-p clojure-load-file)
+          (progn
+            (load clojure-load-file)
+            (load clojure-test-load-file)
+            (load swank-clojure-load-file)
+            (add-hook 'slime-repl-mode-hook 'clojure-mode-font-lock-setup)
+            )
+        (warn "Unable to load clojure-mode"))))
+         
+
 ;; JS2/Yaml -- These should be in the load path
 
 (if use-js2
@@ -95,6 +124,13 @@
     (progn 
       (require 'yaml-mode)
       (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
+
+(if use-nxml
+    (progn
+      (add-to-list 'load-path (path-to-file (list my-site-lisp "nxml-mode-20041004") "rng-auto.el"))))
+
+(if use-tidy
+    (require 'tidy))
 
 ;; Python
 
@@ -167,7 +203,8 @@
       (ac-config-default)
       (define-globalized-minor-mode real-global-auto-complete-mode
         auto-complete-mode (lambda ()
-                             (if (not (minibufferp (current-buffer)))
+                             (if (not (or (minibufferp (current-buffer))
+                                          (search "shell" (buffer-name (current-buffer)))))
                                  (auto-complete-mode 1))
                              ))
       (real-global-auto-complete-mode t)))
@@ -208,6 +245,15 @@
 ;; Remove toolbar
 (tool-bar-mode -1)
 
+;; Kill shells without asking
+(add-hook 
+ 'shell-mode-hook 
+ (lambda () 
+   (set-process-query-on-exit-flag (get-buffer-process 
+                                   (current-buffer)) 
+                                 nil))) 
+
+
 ;; AUTOMATICALLY SET VARIABLES/FACES
 
 (setq ansi-color-names-vector ; better contrast colors
@@ -222,14 +268,15 @@
  '(column-number-mode t)
  '(inhibit-startup-screen t))
 
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (
+(if (not is-windows)
+    (custom-set-faces
+     ;; custom-set-faces was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(default ((t (
                 :inherit nil :stipple nil :background "white" :foreground "black" 
                 :inverse-video nil :box nil :strike-through nil :overline nil
                 :underline nil :slant normal :weight normal :height 109
                 :width normal :foundry "unknown" :family "DejaVu Sans Mono"
-                )))))
+                ))))))
