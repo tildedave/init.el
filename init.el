@@ -99,7 +99,9 @@
 ;; Python
 
 (if use-python-pep8
-    (require 'python-pep8))
+    (progn
+    (require 'compile)
+    (require 'python-pep8)))
       
 (if use-python-pylint
     (progn
