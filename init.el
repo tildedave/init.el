@@ -219,6 +219,8 @@
 ;; big ol' windows hacks
 (if is-windows 
     (progn 
+      (require 'cygwin-mount)
+      (cygwin-mount-activate)
       (add-hook 'comint-output-filter-functions
                 'shell-strip-ctrl-m nil t)
       (add-hook 'comint-output-filter-functions
@@ -243,6 +245,12 @@
    (set-process-query-on-exit-flag (get-buffer-process 
                                    (current-buffer)) 
                                  nil))) 
+
+;; Find file in project
+(require 'project-local-variables)
+(require 'find-file-in-project)
+(setq ffip-find-command "/usr/bin/find")
+(global-set-key (kbd "C-x C-r") 'find-file-in-project)
 
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
