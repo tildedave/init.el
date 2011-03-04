@@ -11,7 +11,9 @@
 (setq use-clojure t)
 (setq use-slime t)
 (setq use-yaml t)
+(setq use-nxml t)
 (setq use-php t)
+(setq use-tidy t)
 (setq use-python-pep8 t)
 (setq use-python-pylint t)
 (setq use-inf-ruby t)
@@ -123,12 +125,19 @@
       (require 'yaml-mode)
       (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
 
+(if use-nxml
+    (progn
+      (add-to-list 'load-path (path-to-file (list my-site-lisp "nxml-mode-20041004") "rng-auto.el"))))
+
+(if use-tidy
+    (require 'tidy))
+
 ;; Python
 
 (if use-python-pep8
     (progn
-      (require 'compile)
-      (require 'python-pep8)))
+    (require 'compile)
+    (require 'python-pep8)))
       
 (if use-python-pylint
     (progn
