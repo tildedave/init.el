@@ -3,6 +3,6 @@
 
 (require 'geiser)
 
-(setq geiser-scheme-dir "/cygdrive/c/emacs/.emacs.d/geiser/build/../scheme")
+(setq geiser-scheme-dir "/home/dave/.emacs.d/geiser/build/../scheme")
 
 (provide 'geiser-load)
