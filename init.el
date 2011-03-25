@@ -11,6 +11,7 @@
 (setq use-clojure t)
 (setq use-slime t)
 (setq use-yaml t)
+(setq use-tuareg t)
 (setq use-php t)
 (setq use-python-pep8 t)
 (setq use-python-pylint t)
@@ -84,6 +85,11 @@
                 (setq geiser-scheme-dir "C:/cygwin/usr/local/share/geiser"))
             (add-to-list 'auto-mode-alist '("\.rkt" . scheme-mode)))
         (warn "Unable to load geiser-mode"))))
+
+(if use-tuareg
+    (progn
+      (load-file
+       (path-to-file (list my-site-lisp "tuareg-2.0.4") "tuareg.el"))))
 
 (if use-slime
     (progn
