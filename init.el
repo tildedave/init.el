@@ -274,15 +274,18 @@
 (defun spawn-shell ()
   "Invoke shell test"
   (interactive)
-  (let* ((original-buffer (current-buffer))
+  (let* ((original-window (selected-window))
          (command (read-from-minibuffer "Shell command to execute: "))
-         (buffer-name (concat "*" command "*"))
-         (spawn-buffer (generate-new-buffer buffer-name)))
-    (progn
-      (shell spawn-buffer)
-      (process-send-string nil (concat command "\n"))
-      (delete-window))))
-
+         (buffer-name (concat "*" command "*")))
+    (progn 
+      (if (get-buffer buffer-name)
+          (kill-buffer buffer-name))
+      (let ((spawn-buffer (generate-new-buffer buffer-name)))
+        (progn
+          (shell spawn-buffer)
+          (process-send-string nil (concat command "\n"))
+          (select-window original-window))))))
+    
 (global-set-key "\M-@" 'spawn-shell)
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
