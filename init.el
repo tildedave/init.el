@@ -91,7 +91,8 @@
 (if use-tuareg
     (progn
       (load-file
-       (path-to-file (list my-site-lisp "tuareg-2.0.4") "tuareg.el"))))
+       (path-to-file (list my-site-lisp "tuareg-2.0.4") "tuareg.el"))
+      (add-to-list 'auto-mode-alist '("\\.ml$" . tuareg-mode))))
 
 (if use-slime
     (progn
@@ -267,6 +268,22 @@
 (setq ffip-find-command "/usr/bin/find")
 (global-set-key (kbd "C-x C-r") 'find-file-in-project)
 
+
+;; Useful Commands
+
+(defun spawn-shell ()
+  "Invoke shell test"
+  (interactive)
+  (let* ((original-buffer (current-buffer))
+         (command (read-from-minibuffer "Shell command to execute: "))
+         (buffer-name (concat "*" command "*"))
+         (spawn-buffer (generate-new-buffer buffer-name)))
+    (progn
+      (shell spawn-buffer)
+      (process-send-string nil (concat command "\n"))
+      (delete-window))))
+
+(global-set-key "\M-@" 'spawn-shell)
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
 
