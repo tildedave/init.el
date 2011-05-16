@@ -1,4 +1,4 @@
-;;; js2.el -- an improved JavaScript editing mode
+';;; js2.el -- an improved JavaScript editing mode
 ;;;
 ;;; This file was auto-generated on Thu Jul 23 16:21:42 2009 from files:
 ;;;  js2-externs.el
