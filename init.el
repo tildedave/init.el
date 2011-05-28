@@ -4,26 +4,15 @@
 (add-to-list 'load-path my-site-lisp)
 
 ;; By default, all language modes get loaded
-(setq use-haskell t)
 (setq use-geiser t)
 (setq use-proofgeneral t)
-(setq use-js2 t)
-(setq use-clojure t)
-(setq use-slime t)
-(setq use-yaml t)
 (setq use-tuareg t)
-(setq use-php t)
-(setq use-tidy t)
 (setq use-python-pep8 t)
 (setq use-python-pylint t)
-(setq use-inf-ruby t)
-(setq use-rails-reloaded t)
-(setq use-feature-mode t)
 
 ;; Which other packages get loaded
 (setq use-yasnippet t)
 (setq use-autocomplete t)
-(setq use-icicles t)
 
 ;; Essential keybindings
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
@@ -48,20 +37,6 @@
   (concat (list-to-directory list) filename))
 
 ;; LANGUAGE SPECIFIC MODES 
-
-;; Haskell
-
-(if use-haskell
-    (let
-        ((haskell-site-file
-          (path-to-file (list my-site-lisp "haskell-mode-2.8.0") "haskell-site-file.el")))
-      (if (file-exists-p haskell-site-file)
-          (progn
-            (load haskell-site-file)
-            (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-            (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-            (add-hook 'haskell-mode-hook 'font-lock-mode))
-        (warn "Error loading Haskell mode -- could not find site file"))))
 
 ;; Coq/Proof General
 
@@ -93,47 +68,6 @@
        (path-to-file (list my-site-lisp "tuareg-2.0.4") "tuareg.el"))
       (add-to-list 'auto-mode-alist '("\\.ml$" . tuareg-mode))))
 
-(if use-slime
-    (progn
-      (add-to-list 'load-path (list-to-directory (list my-site-lisp "slime")))
-      (require 'slime)
-      (slime-setup '(slime-repl))))
-
-(if use-clojure
-    (let 
-        ((clojure-load-file
-          (path-to-file (list my-site-lisp "clojure-mode") "clojure-mode.el"))
-         (clojure-test-load-file
-          (path-to-file (list my-site-lisp "clojure-mode") "clojure-test-mode.el"))
-         (swank-clojure-load-file 
-          (path-to-file (list my-site-lisp "swank-clojure") "swank-clojure.el"))
-         )
-      (if (file-exists-p clojure-load-file)
-          (progn
-            (load clojure-load-file)
-            (load clojure-test-load-file)
-            (load swank-clojure-load-file)
-            (add-hook 'slime-repl-mode-hook 'clojure-mode-font-lock-setup)
-            )
-        (warn "Unable to load clojure-mode"))))
-         
-
-;; JS2/Yaml -- These should be in the load path
-
-(if use-js2
-    (progn
-      (autoload 'js2-mode "js2" nil t)
-      (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-      (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))))
-
-(if use-yaml
-    (progn 
-      (require 'yaml-mode)
-      (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))))
-
-(if use-tidy
-    (require 'tidy))
-
 ;; Python
 
 (if use-python-pep8
@@ -146,39 +80,6 @@
       (require 'python-pylint)
       (autoload 'python-pylint "python-pylint")
       (autoload 'pylint "python-pylint")))
-
-;; PHP
-
-(if use-php
-    (progn
-      (autoload 'php-mode "php-mode" nil t)
-      (add-to-list 'auto-mode-alist '("\\.php" . php-mode))))
-
-;; Ruby
-
-(if use-inf-ruby
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
-      (require 'inf-ruby)))
-
-;; Cucumber
-
-(if use-feature-mode
-    (let ((feature-mode-directory (list-to-directory (list my-site-lisp "feature-mode"))))
-      (if (file-exists-p feature-mode-directory)
-          (progn
-            (add-to-list 'load-path feature-mode-directory)
-            (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
-            (setq feature-default-language "fi")
-            (require 'feature-mode))
-        (warn "Could not load feature mode"))))
-
-(if use-rails-reloaded
-    (let*
-        ((rails-reloaded-path (list-to-directory (list my-site-lisp "rails-reloaded"))))
-      (progn
-        (add-to-list 'load-path rails-reloaded-path)
-        (require 'rails-autoload))))
 
 ;; OTHER MODULES (yasnippet, autocomplete, etc)
 
@@ -210,15 +111,6 @@
                                  (auto-complete-mode 1))
                              ))
       (real-global-auto-complete-mode t)))
-
-(if use-icicles
-      (let 
-          ((icicle-path (list-to-directory (list my-site-lisp "icicles"))))
-        (progn
-          (add-to-list 'load-path icicle-path)
-          (require 'icicles)
-          (icy-mode 1))))
-
 
 ;; QUALITY OF LIFE SETTINGS
 
@@ -309,3 +201,11 @@
                 :underline nil :slant normal :weight normal :height 109
                 :width normal :foundry "unknown" :family "DejaVu Sans Mono"
                 ))))))
+
+
+;; ELPA/Marmalade
+(load-file "~/.emacs.d/elpa/package.el")
+(add-to-list 'package-archives 
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
