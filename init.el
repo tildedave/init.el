@@ -270,3 +270,5 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
+; Ctrl X-Ctrl S button dangerously close to Ctrl X-Ctrl C
+(setq confirm-kill-emacs 'yes-or-no-p)
