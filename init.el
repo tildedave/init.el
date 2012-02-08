@@ -33,10 +33,10 @@
     (dolist (element list value)
       (setq value (file-name-as-directory (concat value element))))))
 
-(defun path-to-file (list filename) 
+(defun path-to-file (list filename)
   (concat (list-to-directory list) filename))
 
-;; LANGUAGE SPECIFIC MODES 
+;; LANGUAGE SPECIFIC MODES
 
 ;; Coq/Proof General
 
@@ -49,8 +49,8 @@
 
 ;; Geiser Mode
 (if use-geiser
-    (let 
-        ((geiser-load-file 
+    (let
+        ((geiser-load-file
           (path-to-file (list my-site-lisp "geiser" "build" "elisp") "geiser-load.elc"))
          )
       (if (file-exists-p geiser-load-file)
@@ -74,7 +74,7 @@
     (progn
     (require 'compile)
     (require 'python-pep8)))
-      
+
 (if use-python-pylint
     (progn
       (require 'python-pylint)
@@ -84,7 +84,7 @@
 ;; OTHER MODULES (yasnippet, autocomplete, etc)
 
 (if use-yasnippet
-    (let* 
+    (let*
         ((yasnippet-load-directory
           (list-to-directory (list my-site-lisp "plugins" "yasnippet-0.6.1c")))
 	 (yasnippet-bundle
@@ -100,7 +100,7 @@
 	(warn "Error loading yasnippet"))))
 
 (if use-autocomplete
-    (progn 
+    (progn
       (require 'auto-complete-config)
       (add-to-list 'ac-dictionary-directories (list-to-directory (list my-emacsd "ac-dist")))
       (ac-config-default)
@@ -120,8 +120,8 @@
 (setq savehist-file (concat (file-name-as-directory (concat my-emacsd "tmp")) "savehist"))
 
 ;; big ol' windows hacks
-(if is-windows 
-    (progn 
+(if is-windows
+    (progn
       (require 'cygwin-mount)
       (cygwin-mount-activate)
       (add-hook 'comint-output-filter-functions
@@ -130,7 +130,7 @@
                 'comint-watch-for-password-prompt nil t)
       (setq explicit-shell-file-name "bash.exe")
       (setq shell-file-name explicit-shell-file-name)))
-  
+
 ;; Shell coloring
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -142,12 +142,12 @@
 (tool-bar-mode -1)
 
 ;; Kill shells without asking
-(add-hook 
- 'shell-mode-hook 
- (lambda () 
-   (set-process-query-on-exit-flag (get-buffer-process 
-                                   (current-buffer)) 
-                                 nil))) 
+(add-hook
+ 'shell-mode-hook
+ (lambda ()
+   (set-process-query-on-exit-flag (get-buffer-process
+                                   (current-buffer))
+                                 nil)))
 
 ;; Find file in project
 (require 'project-local-variables)
@@ -164,7 +164,7 @@
   (let* ((original-window (selected-window))
          (command (read-from-minibuffer "Shell command to execute: "))
          (buffer-name (concat "*" command "*")))
-    (progn 
+    (progn
       (if (get-buffer buffer-name)
           (kill-buffer buffer-name))
       (let ((spawn-buffer (generate-new-buffer buffer-name)))
@@ -172,7 +172,7 @@
           (shell spawn-buffer)
           (process-send-string nil (concat command "\n"))
           (select-window original-window))))))
-    
+
 (global-set-key "\M-@" 'spawn-shell)
 
 ;; AUTOMATICALLY SET VARIABLES/FACES
@@ -196,7 +196,7 @@
      ;; Your init file should contain only one such instance.
      ;; If there is more than one, they won't work right.
      '(default ((t (
-                :inherit nil :stipple nil :background "white" :foreground "black" 
+                :inherit nil :stipple nil :background "white" :foreground "black"
                 :inverse-video nil :box nil :strike-through nil :overline nil
                 :underline nil :slant normal :weight normal :height 109
                 :width normal :foundry "unknown" :family "DejaVu Sans Mono"
@@ -259,14 +259,14 @@
   (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
   (define-key js2-mode-map [(control meta q)] 'my-indent-sexp)
   (if (featurep 'js2-highlight-vars)
-    (js2-highlight-vars-mode))
+      (js2-highlight-vars-mode))
   (message "My JS2 hook"))
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
 
 ;; ELPA/Marmalade
 (load-file "~/.emacs.d/elpa/package.el")
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -275,3 +275,6 @@
 
 ;; death to blinking cursor
 (blink-cursor-mode -1)
+
+;; Whitespace arguments are stupid
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
