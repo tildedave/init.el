@@ -247,7 +247,7 @@
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
-  (define-key js2-mode-map [(meta control \;)] 
+  (define-key js2-mode-map [(meta control \;)]
     '(lambda()
        (interactive)
        (insert "/* -----[ ")
@@ -278,3 +278,8 @@
 
 ;; Whitespace arguments are stupid
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Convert JSUnit tests into Jasmine tests, kind of
+(fset 'convert-test-to-spec
+   [?\C-s ?f ?u ?n ?\M-b ?i ?t ?\( ?\C-  ?\M-f ?\M-f ?\M-b ?\C-w ?\" ?\M-f ?\" ?, ?  S-insert backspace ?\C-e left ?\C-\M-n ?\) ?\; ?\C-\M-p ?\C-a ?\C-\M-n ?\C-a down down])
+
