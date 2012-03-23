@@ -13,6 +13,7 @@
 ;; Which other packages get loaded
 (setq use-yasnippet t)
 (setq use-autocomplete t)
+(setq use-icicles t)
 
 ;; Essential keybindings
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
@@ -98,6 +99,18 @@
 	    (yas/initialize)
 	    (yas/load-directory yasnippet-bundle))
 	(warn "Error loading yasnippet"))))
+
+(if use-icicles
+    (let*
+        ((icicles-load-directory
+          (list-to-directory (list my-site-lisp "plugins" "icicles")))
+         )
+      (if (file-exists-p icicles-load-directory)
+          (progn
+            (add-to-list 'load-path icicles-load-directory)
+            (require 'icicles)
+            (icy-mode))
+        (warn "Error loading icicles"))))
 
 (if use-autocomplete
     (progn
@@ -202,7 +215,6 @@
                 :width normal :foundry "unknown" :family "DejaVu Sans Mono"
                 ))))))
 
-
 (server-start)
 
 
@@ -237,7 +249,6 @@
       (indent-line-to indentation)
       (when (> offset 0) (forward-char offset)))))
 
-
 (defun my-js2-mode-hook ()
   (require 'espresso)
   (setq espresso-indent-level 2
@@ -245,6 +256,7 @@
         c-basic-offset 8)
   (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
   (define-key js2-mode-map [(meta control \;)]
@@ -273,11 +285,20 @@
 ;; Ctrl X-Ctrl S button dangerously close to Ctrl X-Ctrl C
 (setq confirm-kill-emacs 'yes-or-no-p)
 
+;; Whitespace arguments are stupid
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; death to blinking cursor
 (blink-cursor-mode -1)
 
-;; Whitespace arguments are stupid
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(defun my-delete-trailing-blank-lines ()
+  "Deletes all blank lines at the end of the file."
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char (point-max))
+      (delete-blank-lines))))
 
 ;; Convert JSUnit tests into Jasmine tests, kind of
 (fset 'convert-test-to-spec
