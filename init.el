@@ -257,6 +257,7 @@
   (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'my-delete-trailing-blank-lines)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
   (define-key js2-mode-map [(meta control \;)]
