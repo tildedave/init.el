@@ -175,6 +175,20 @@
 (global-set-key (kbd "C-x C-r") 'find-file-in-project)
 
 
+(setq ffip-limit 16384)
+(setq ffip-patterns '("*.html" "*.py" "*.js" "*.erb" "*.json"))
+(setq ffip-find-options "-not -regex \".*goog/.*\" -not -regex \".*node_modules.*\" -not -regex \".*/extern/.*\" -not -regex \".*/tide/.*\" -not -regex \".*goog_third_party/.*\" -not -regex \".*jsdoc/.*\"")
+
+(defun ffip-uniqueify (file-cons)
+  "Customize file uniqueness to show the previous two directories"
+  (let ((file-path-in-reverse (reverse (split-string (cdr file-cons) "/"))))
+    (setcar file-cons
+            (concat (car file-cons)
+                    ": "
+                    (caddr file-path-in-reverse)
+                    "/"
+                    (cadr file-path-in-reverse)))))
+
 ;; Useful Commands
 
 (defun spawn-shell ()
