@@ -27,6 +27,12 @@
 ;; Check if we are on my Windows 7 box
 (setq is-windows (string= system-type "windows-nt"))
 
+;; ELPA/Marmalade
+(load-file "~/.emacs.d/elpa/package.el")
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
 ;; Directory Conversion Functions
 
 (defun list-to-directory (list)
@@ -276,12 +282,6 @@
   (message "My JS2 hook"))
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
-
-;; ELPA/Marmalade
-(load-file "~/.emacs.d/elpa/package.el")
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
 
 ;; Ctrl X-Ctrl S button dangerously close to Ctrl X-Ctrl C
 (setq confirm-kill-emacs 'yes-or-no-p)
