@@ -28,17 +28,11 @@
 (setq is-windows (string= system-type "windows-nt"))
 
 ;; ELPA/Marmalade
-(load-file "~/.emacs.d/elpa/package.el")
+(require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
-
-(when (> emacs-major-version 23)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/")
-               'APPEND))
-
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
 ;; Directory Conversion Functions
@@ -117,8 +111,6 @@
 (if use-icicles
     (progn
       (require 'icicles)
-      (setq icicle-apropos-complete-keys '([tab]))
-      (setq icicle-prefix-complete-keys '([S-tab]))
       (icy-mode)))
 
 (if use-autocomplete
@@ -222,8 +214,9 @@
                 :width normal :foundry "unknown" :family "DejaVu Sans Mono"
                 ))))))
 
-(server-start)
-
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'js2-global-externs "ck")
+(add-to-list 'js2-global-externs "goog")
 
 (defun my-js2-indent-function ()
   (interactive)
