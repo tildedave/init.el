@@ -31,6 +31,14 @@
 (load-file "~/.emacs.d/elpa/package.el")
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(when (> emacs-major-version 23)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.milkbox.net/packages/")
+               'APPEND))
+
 (package-initialize)
 
 ;; Directory Conversion Functions
@@ -107,16 +115,9 @@
 	(warn "Error loading yasnippet"))))
 
 (if use-icicles
-    (let*
-        ((icicles-load-directory
-          (list-to-directory (list my-site-lisp "plugins" "icicles")))
-         )
-      (if (file-exists-p icicles-load-directory)
-          (progn
-            (add-to-list 'load-path icicles-load-directory)
-            (require 'icicles)
-            (icy-mode))
-        (warn "Error loading icicles"))))
+    (progn
+      (require 'icicles)
+      (icy-mode)))
 
 (if use-autocomplete
     (progn
@@ -318,4 +319,3 @@
 ;; Convert JSUnit tests into Jasmine tests, kind of
 (fset 'convert-test-to-spec
    [?\C-s ?f ?u ?n ?\M-b ?i ?t ?\( ?\C-  ?\M-f ?\M-f ?\M-b ?\C-w ?\" ?\M-f ?\" ?, ?  S-insert backspace ?\C-e left ?\C-\M-n ?\) ?\; ?\C-\M-p ?\C-a ?\C-\M-n ?\C-a down down])
-
