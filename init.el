@@ -215,8 +215,7 @@
                 ))))))
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'js2-global-externs "ck")
-(add-to-list 'js2-global-externs "goog")
+(setq js2-global-externs '("ck" "goog" "ko" "gettext" "spyOn" "setFixtures" "addTestDependency" "beforeEach" "describe" "it" "expect" "servo"))
 
 (defun my-js2-indent-function ()
   (interactive)
